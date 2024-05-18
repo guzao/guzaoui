@@ -2,23 +2,19 @@
 import { ref, useSlots } from 'vue'
 import type { ButtonProps } from './types'
 
-
-
 defineOptions({
   name: 'GzButton'
 })
 
-
 const props = withDefaults(defineProps<ButtonProps>(), {
   tag: "button",
   nativeType: "button",
-  size: 'default'
+  size: 'default',
 })
 
 const _ref = ref<HTMLButtonElement>();
 
 const slot = useSlots()
-
 
 </script>
 
