@@ -1,5 +1,6 @@
 import components from './components'
 import { makewTthInstaller } from '@guzao-ui/utils'
+import '@guzao-ui/theme/index.css'
 
 // 创建插件
 const installer = makewTthInstaller(components)
