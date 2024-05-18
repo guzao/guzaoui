@@ -1,39 +1,42 @@
 <script setup lang="ts">
-import { ref, useSlots } from 'vue'
-import type { ButtonProps } from './types'
+import { ref } from 'vue'
+import { throttle } from 'lodash-es'
+import type { ButtonProps, ButtonEmits, ButtonInstance } from './types'
 
-defineOptions({
-  name: 'GzButton'
-})
+defineOptions({ name: 'GzButton' })
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   tag: "button",
   nativeType: "button",
   size: 'default',
+  useThrottle: false,
+  throttleDuration: 500
 })
 
 const _ref = ref<HTMLButtonElement>();
 
-const slot = useSlots()
+const emits = defineEmits<ButtonEmits>()
+
+const handleBtnClick = (e: MouseEvent) => emits('click', e)
+
+const handleBtnThrottleClick = throttle(handleBtnClick, props.throttleDuration)
+
+defineExpose<ButtonInstance>({
+  ref: _ref
+})
 
 </script>
 
 <template>
-  <component 
-  ref="_ref"
-  :is="tag"
-  class="gz-button"
-  :type="tag == 'button' ? nativeType : void 0 "
-  :disabled="disabled || loading ? true : void 0"
-  :class="{
-    [`gz-button--${type}`]: type,
-    [`gz-button--${size}`]: size,
-    'is-plain': plain,
-    'is-round': round,
-    'is-loading': loading,
-    'is-circle': circle,
-  }"
-  >
+  <component ref="_ref" :is="tag" class="gz-button" :type="tag == 'button' ? nativeType : void 0"
+    :disabled="disabled || loading ? true : void 0" :class="{
+      [`gz-button--${type}`]: type,
+      [`gz-button--${size}`]: size,
+      'is-plain': plain,
+      'is-round': round,
+      'is-loading': loading,
+      'is-circle': circle,
+    }" @click="(e: MouseEvent) => useThrottle ? handleBtnThrottleClick(e) : handleBtnClick(e)">
     <slot />
   </component>
 </template>

@@ -4,7 +4,6 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "GuZaoUI",
   description: "学习使用的UI",
-  base: 'guzao-ui/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
