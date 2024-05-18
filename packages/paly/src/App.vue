@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <gz-button />
+  <gz-button type="primary" >  button content </gz-button>
 </template>
 
 <style scoped>
